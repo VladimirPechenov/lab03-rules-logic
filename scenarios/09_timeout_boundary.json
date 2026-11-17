@@ -1,0 +1,100 @@
+{
+  "name": "Граница таймера поиска",
+  "steps": [
+    {
+      "caption": "G1 обнаруживает игрока",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "hall"
+        ]
+      ],
+      "expect": {
+        "g1": "chase",
+        "g2": "search"
+      },
+      "dt": 0,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": []
+    },
+    {
+      "caption": "Игрок уходит; начинается поиск G1",
+      "facts": [
+        [
+          "at",
+          "player",
+          "corridor"
+        ]
+      ],
+      "expect": {
+        "g1": "search",
+        "g2": "search"
+      },
+      "dt": 1,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": []
+    },
+    {
+      "caption": "Через 9 секунд G1 ещё ищет, G2 уже закончил",
+      "facts": [],
+      "expect": {
+        "g1": "search",
+        "g2": "patrol"
+      },
+      "dt": 9,
+      "remove": [],
+      "expect_facts": [
+        [
+          "alarm"
+        ]
+      ],
+      "absent_facts": []
+    },
+    {
+      "caption": "Ровно через 10 секунд G1 завершает поиск",
+      "facts": [],
+      "expect": {
+        "g1": "patrol",
+        "g2": "patrol"
+      },
+      "dt": 1,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": [
+        [
+          "alarm"
+        ]
+      ]
+    }
+  ]
+}

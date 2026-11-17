@@ -1,0 +1,59 @@
+{
+  "name": "Приоритет зрения над шумом",
+  "steps": [
+    {
+      "caption": "G1 одновременно видит игрока и слышит шум",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "hall"
+        ],
+        [
+          "hears",
+          "g1",
+          "noise"
+        ]
+      ],
+      "expect": {
+        "g1": "chase",
+        "g2": "search"
+      },
+      "dt": 0,
+      "remove": [],
+      "expect_facts": [
+        [
+          "alarm"
+        ]
+      ],
+      "absent_facts": []
+    }
+  ]
+}

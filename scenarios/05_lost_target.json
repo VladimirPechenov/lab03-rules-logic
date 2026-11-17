@@ -1,0 +1,90 @@
+{
+  "name": "Потеря цели и завершение поиска",
+  "steps": [
+    {
+      "caption": "G1 видит игрока; G2 получает тревогу",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "hall"
+        ]
+      ],
+      "expect": {
+        "g1": "chase",
+        "g2": "search"
+      },
+      "dt": 0,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": []
+    },
+    {
+      "caption": "Игрок уходит в коридор; G1 запоминает зал",
+      "facts": [
+        [
+          "at",
+          "player",
+          "corridor"
+        ]
+      ],
+      "expect": {
+        "g1": "search",
+        "g2": "search"
+      },
+      "dt": 1,
+      "remove": [],
+      "expect_facts": [
+        [
+          "last_seen",
+          "g1",
+          "hall"
+        ]
+      ],
+      "absent_facts": []
+    },
+    {
+      "caption": "Прошло 10 секунд поиска; оба возвращаются на пост",
+      "facts": [],
+      "expect": {
+        "g1": "patrol",
+        "g2": "patrol"
+      },
+      "dt": 10,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": [
+        [
+          "alarm"
+        ]
+      ]
+    }
+  ]
+}

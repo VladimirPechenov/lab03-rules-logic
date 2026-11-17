@@ -1,0 +1,68 @@
+{
+  "name": "Тревога прерывает расследование",
+  "steps": [
+    {
+      "caption": "G2 начинает расследование шума",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "hears",
+          "g2",
+          "noise"
+        ]
+      ],
+      "expect": {
+        "g1": "patrol",
+        "g2": "investigate"
+      },
+      "dt": 0,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": []
+    },
+    {
+      "caption": "G1 обнаруживает игрока; G2 переключается на поиск",
+      "facts": [
+        [
+          "at",
+          "player",
+          "hall"
+        ]
+      ],
+      "expect": {
+        "g1": "chase",
+        "g2": "search"
+      },
+      "dt": 1,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": []
+    }
+  ]
+}

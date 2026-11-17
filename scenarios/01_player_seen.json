@@ -1,1 +1,59 @@
-{"name": "player seen by g1", "facts": [["sees", "g1", "player"]], "expect": {"g1": "chase", "g2": "search"}}
+{
+  "name": "Обнаружение игрока и общая тревога",
+  "steps": [
+    {
+      "caption": "Игрок входит в освещённый зал",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "hall"
+        ]
+      ],
+      "expect": {
+        "g1": "chase",
+        "g2": "search"
+      },
+      "dt": 0,
+      "remove": [],
+      "expect_facts": [
+        [
+          "alarm"
+        ],
+        [
+          "last_seen",
+          "g1",
+          "hall"
+        ]
+      ],
+      "absent_facts": []
+    }
+  ]
+}

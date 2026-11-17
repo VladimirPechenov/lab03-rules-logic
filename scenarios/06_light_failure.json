@@ -1,0 +1,83 @@
+{
+  "name": "Проверка выключателя",
+  "steps": [
+    {
+      "caption": "В зале отключается свет; G1 проверяет выключатель",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "power_failed",
+          "hall"
+        ]
+      ],
+      "expect": {
+        "g1": "investigate",
+        "g2": "patrol"
+      },
+      "dt": 0,
+      "remove": [
+        [
+          "light_on",
+          "hall"
+        ]
+      ],
+      "expect_facts": [
+        [
+          "target",
+          "g1",
+          "switch"
+        ]
+      ],
+      "absent_facts": []
+    },
+    {
+      "caption": "Свет восстановлен; за 5 секунд подозрений не найдено",
+      "facts": [
+        [
+          "light_on",
+          "hall"
+        ]
+      ],
+      "expect": {
+        "g1": "patrol",
+        "g2": "patrol"
+      },
+      "dt": 5,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": [
+        [
+          "target",
+          "g1",
+          "switch"
+        ]
+      ]
+    }
+  ]
+}

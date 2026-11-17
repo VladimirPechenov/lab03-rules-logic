@@ -1,19 +1,21 @@
 [project]
 name = "lab03-rules"
-version = "0.1.0"
-description = "Учебный проект по дисциплине «Игровой ИИ»"
+version = "1.0.0"
+description = "Rule based stealth NPC laboratory"
 requires-python = ">=3.10"
-dependencies = [
-    "pyswip>=0.2.10"
-]
+dependencies = ["Pillow>=10"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "ruff>=0.5", "pre-commit>=3"]
+dev = ["pytest>=8", "ruff>=0.5"]
+report = ["reportlab>=4"]
+
+[project.scripts]
+lab03-scenarios = "rules.scenarios:main"
+lab03-demo = "rules.demo:main"
 
 [tool.ruff]
 line-length = 120
 target-version = "py310"
-exclude = ["notebooks", ".venv"]
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "B"]

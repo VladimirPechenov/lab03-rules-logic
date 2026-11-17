@@ -1,0 +1,55 @@
+{
+  "name": "Открытие двери",
+  "steps": [
+    {
+      "caption": "Событие открытия двери на складе создаёт шум",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "door_opened",
+          "storage"
+        ]
+      ],
+      "expect": {
+        "g1": "patrol",
+        "g2": "investigate"
+      },
+      "dt": 0,
+      "remove": [],
+      "expect_facts": [
+        [
+          "hears",
+          "g2",
+          "noise"
+        ]
+      ],
+      "absent_facts": []
+    }
+  ]
+}

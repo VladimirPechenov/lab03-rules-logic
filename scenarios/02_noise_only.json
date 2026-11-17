@@ -1,1 +1,54 @@
-{"name": "noise heard by g2", "facts": [["hears", "g2", "noise"]], "expect": {"g1": "patrol", "g2": "investigate"}}
+{
+  "name": "Реакция на шум",
+  "steps": [
+    {
+      "caption": "Стражник G2 слышит шум на складе",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "hears",
+          "g2",
+          "noise"
+        ]
+      ],
+      "expect": {
+        "g1": "patrol",
+        "g2": "investigate"
+      },
+      "dt": 0,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": [
+        [
+          "alarm"
+        ]
+      ]
+    }
+  ]
+}

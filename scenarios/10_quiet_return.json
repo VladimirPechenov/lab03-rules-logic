@@ -1,0 +1,90 @@
+{
+  "name": "Возврат на пост и спокойное патрулирование",
+  "steps": [
+    {
+      "caption": "G1 проверяет шум",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "hears",
+          "g1",
+          "noise"
+        ]
+      ],
+      "expect": {
+        "g1": "investigate",
+        "g2": "patrol"
+      },
+      "dt": 0,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": []
+    },
+    {
+      "caption": "Через 4 секунды проверка ещё продолжается",
+      "facts": [],
+      "expect": {
+        "g1": "investigate",
+        "g2": "patrol"
+      },
+      "dt": 4,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": []
+    },
+    {
+      "caption": "На пятой секунде G1 возвращается на пост",
+      "facts": [],
+      "expect": {
+        "g1": "patrol",
+        "g2": "patrol"
+      },
+      "dt": 1,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": []
+    },
+    {
+      "caption": "Без новых событий состояние остаётся стабильным",
+      "facts": [],
+      "expect": {
+        "g1": "patrol",
+        "g2": "patrol"
+      },
+      "dt": 20,
+      "remove": [],
+      "expect_facts": [],
+      "absent_facts": [
+        [
+          "alarm"
+        ]
+      ]
+    }
+  ]
+}

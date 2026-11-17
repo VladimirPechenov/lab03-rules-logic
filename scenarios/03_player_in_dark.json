@@ -1,0 +1,71 @@
+{
+  "name": "Игрок в тёмной зоне",
+  "steps": [
+    {
+      "caption": "Игрок в тёмном зале шумит, но остаётся невидимым",
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "hall"
+        ],
+        [
+          "hears",
+          "g1",
+          "noise"
+        ]
+      ],
+      "expect": {
+        "g1": "investigate",
+        "g2": "patrol"
+      },
+      "dt": 0,
+      "remove": [
+        [
+          "light_on",
+          "hall"
+        ]
+      ],
+      "expect_facts": [
+        [
+          "hidden",
+          "g1",
+          "player"
+        ]
+      ],
+      "absent_facts": [
+        [
+          "sees",
+          "g1",
+          "player"
+        ],
+        [
+          "alarm"
+        ]
+      ]
+    }
+  ]
+}
