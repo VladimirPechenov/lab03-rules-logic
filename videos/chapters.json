@@ -1,0 +1,62 @@
+[
+  {
+    "id": "01_player_seen",
+    "name": "Обнаружение игрока и общая тревога",
+    "start": 0,
+    "duration": 9
+  },
+  {
+    "id": "02_noise_only",
+    "name": "Реакция на шум",
+    "start": 9,
+    "duration": 9
+  },
+  {
+    "id": "03_player_in_dark",
+    "name": "Игрок в тёмной зоне",
+    "start": 18,
+    "duration": 9
+  },
+  {
+    "id": "04_door_opened",
+    "name": "Открытие двери",
+    "start": 27,
+    "duration": 9
+  },
+  {
+    "id": "05_lost_target",
+    "name": "Потеря цели и завершение поиска",
+    "start": 36,
+    "duration": 27
+  },
+  {
+    "id": "06_light_failure",
+    "name": "Проверка выключателя",
+    "start": 63,
+    "duration": 18
+  },
+  {
+    "id": "07_vision_over_noise",
+    "name": "Приоритет зрения над шумом",
+    "start": 81,
+    "duration": 9
+  },
+  {
+    "id": "08_alarm_interrupt",
+    "name": "Тревога прерывает расследование",
+    "start": 90,
+    "duration": 18
+  },
+  {
+    "id": "09_timeout_boundary",
+    "name": "Граница таймера поиска",
+    "start": 108,
+    "duration": 36
+  },
+  {
+    "id": "10_quiet_return",
+    "name": "Возврат на пост и спокойное патрулирование",
+    "start": 144,
+    "duration": 36
+  }
+]

@@ -181,7 +181,7 @@ def main():
     p.add_argument("--scenario", help="Scenario filename stem")
     p.add_argument("--output", type=Path, default=ROOT / "videos")
     args = p.parse_args()
-    paths = sorted((ROOT / "scenarios").glob(f"{args.scenario or '* '}.json".replace("* ", "*")))
+    paths = sorted((ROOT / "scenarios").glob(f"{args.scenario or '*'}.json"))
     if not paths:
         p.error("No scenarios matched")
     items = [(path, json.loads(path.read_text(encoding="utf-8-sig"))) for path in paths]
