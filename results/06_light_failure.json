@@ -1,0 +1,445 @@
+{
+  "id": "06_light_failure",
+  "name": "Проверка выключателя",
+  "records": [
+    {
+      "step": 1,
+      "time": 0,
+      "caption": "В зале отключается свет; G1 проверяет выключатель",
+      "input": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "power_failed",
+          "hall"
+        ],
+        [
+          "since",
+          "g1",
+          0
+        ],
+        [
+          "since",
+          "g2",
+          0
+        ],
+        [
+          "state",
+          "g1",
+          "patrol"
+        ],
+        [
+          "state",
+          "g2",
+          "patrol"
+        ],
+        [
+          "time",
+          0
+        ]
+      ],
+      "fired": [
+        "light_off_g1"
+      ],
+      "trace": [
+        {
+          "rule": "light_off_g1",
+          "priority": 45,
+          "added": [
+            [
+              "state",
+              "g1",
+              "investigate"
+            ],
+            [
+              "target",
+              "g1",
+              "switch"
+            ]
+          ],
+          "removed": [
+            [
+              "state",
+              "g1",
+              "patrol"
+            ]
+          ],
+          "facts": [
+            [
+              "at",
+              "g1",
+              "hall"
+            ],
+            [
+              "at",
+              "g2",
+              "storage"
+            ],
+            [
+              "at",
+              "player",
+              "corridor"
+            ],
+            [
+              "light_on",
+              "corridor"
+            ],
+            [
+              "light_on",
+              "hall"
+            ],
+            [
+              "light_on",
+              "storage"
+            ],
+            [
+              "power_failed",
+              "hall"
+            ],
+            [
+              "since",
+              "g1",
+              0
+            ],
+            [
+              "since",
+              "g2",
+              0
+            ],
+            [
+              "state",
+              "g1",
+              "investigate"
+            ],
+            [
+              "state",
+              "g2",
+              "patrol"
+            ],
+            [
+              "target",
+              "g1",
+              "switch"
+            ],
+            [
+              "time",
+              0
+            ]
+          ]
+        }
+      ],
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "power_failed",
+          "hall"
+        ],
+        [
+          "since",
+          "g1",
+          0
+        ],
+        [
+          "since",
+          "g2",
+          0
+        ],
+        [
+          "state",
+          "g1",
+          "investigate"
+        ],
+        [
+          "state",
+          "g2",
+          "patrol"
+        ],
+        [
+          "target",
+          "g1",
+          "switch"
+        ],
+        [
+          "time",
+          0
+        ]
+      ],
+      "states": {
+        "g1": "investigate",
+        "g2": "patrol"
+      },
+      "expected": {
+        "g1": "investigate",
+        "g2": "patrol"
+      },
+      "ok": true
+    },
+    {
+      "step": 2,
+      "time": 5,
+      "caption": "Свет восстановлен; за 5 секунд подозрений не найдено",
+      "input": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "since",
+          "g1",
+          0
+        ],
+        [
+          "since",
+          "g2",
+          0
+        ],
+        [
+          "state",
+          "g1",
+          "investigate"
+        ],
+        [
+          "state",
+          "g2",
+          "patrol"
+        ],
+        [
+          "target",
+          "g1",
+          "switch"
+        ],
+        [
+          "time",
+          5
+        ]
+      ],
+      "fired": [
+        "return_post_g1"
+      ],
+      "trace": [
+        {
+          "rule": "return_post_g1",
+          "priority": 20,
+          "added": [
+            [
+              "since",
+              "g1",
+              5
+            ],
+            [
+              "state",
+              "g1",
+              "patrol"
+            ]
+          ],
+          "removed": [
+            [
+              "since",
+              "g1",
+              0
+            ],
+            [
+              "state",
+              "g1",
+              "investigate"
+            ],
+            [
+              "target",
+              "g1",
+              "switch"
+            ]
+          ],
+          "facts": [
+            [
+              "at",
+              "g1",
+              "hall"
+            ],
+            [
+              "at",
+              "g2",
+              "storage"
+            ],
+            [
+              "at",
+              "player",
+              "corridor"
+            ],
+            [
+              "light_on",
+              "corridor"
+            ],
+            [
+              "light_on",
+              "hall"
+            ],
+            [
+              "light_on",
+              "storage"
+            ],
+            [
+              "since",
+              "g1",
+              5
+            ],
+            [
+              "since",
+              "g2",
+              0
+            ],
+            [
+              "state",
+              "g1",
+              "patrol"
+            ],
+            [
+              "state",
+              "g2",
+              "patrol"
+            ],
+            [
+              "time",
+              5
+            ]
+          ]
+        }
+      ],
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "since",
+          "g1",
+          5
+        ],
+        [
+          "since",
+          "g2",
+          0
+        ],
+        [
+          "state",
+          "g1",
+          "patrol"
+        ],
+        [
+          "state",
+          "g2",
+          "patrol"
+        ],
+        [
+          "time",
+          5
+        ]
+      ],
+      "states": {
+        "g1": "patrol",
+        "g2": "patrol"
+      },
+      "expected": {
+        "g1": "patrol",
+        "g2": "patrol"
+      },
+      "ok": true
+    }
+  ]
+}

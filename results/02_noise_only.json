@@ -1,0 +1,217 @@
+{
+  "id": "02_noise_only",
+  "name": "Реакция на шум",
+  "records": [
+    {
+      "step": 1,
+      "time": 0,
+      "caption": "Стражник G2 слышит шум на складе",
+      "input": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "hears",
+          "g2",
+          "noise"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "since",
+          "g1",
+          0
+        ],
+        [
+          "since",
+          "g2",
+          0
+        ],
+        [
+          "state",
+          "g1",
+          "patrol"
+        ],
+        [
+          "state",
+          "g2",
+          "patrol"
+        ],
+        [
+          "time",
+          0
+        ]
+      ],
+      "fired": [
+        "hear_noise_g2"
+      ],
+      "trace": [
+        {
+          "rule": "hear_noise_g2",
+          "priority": 50,
+          "added": [
+            [
+              "state",
+              "g2",
+              "investigate"
+            ]
+          ],
+          "removed": [
+            [
+              "state",
+              "g2",
+              "patrol"
+            ]
+          ],
+          "facts": [
+            [
+              "at",
+              "g1",
+              "hall"
+            ],
+            [
+              "at",
+              "g2",
+              "storage"
+            ],
+            [
+              "at",
+              "player",
+              "corridor"
+            ],
+            [
+              "hears",
+              "g2",
+              "noise"
+            ],
+            [
+              "light_on",
+              "corridor"
+            ],
+            [
+              "light_on",
+              "hall"
+            ],
+            [
+              "light_on",
+              "storage"
+            ],
+            [
+              "since",
+              "g1",
+              0
+            ],
+            [
+              "since",
+              "g2",
+              0
+            ],
+            [
+              "state",
+              "g1",
+              "patrol"
+            ],
+            [
+              "state",
+              "g2",
+              "investigate"
+            ],
+            [
+              "time",
+              0
+            ]
+          ]
+        }
+      ],
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "corridor"
+        ],
+        [
+          "hears",
+          "g2",
+          "noise"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "hall"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "since",
+          "g1",
+          0
+        ],
+        [
+          "since",
+          "g2",
+          0
+        ],
+        [
+          "state",
+          "g1",
+          "patrol"
+        ],
+        [
+          "state",
+          "g2",
+          "investigate"
+        ],
+        [
+          "time",
+          0
+        ]
+      ],
+      "states": {
+        "g1": "patrol",
+        "g2": "investigate"
+      },
+      "expected": {
+        "g1": "patrol",
+        "g2": "investigate"
+      },
+      "ok": true
+    }
+  ]
+}

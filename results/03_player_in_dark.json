@@ -1,0 +1,287 @@
+{
+  "id": "03_player_in_dark",
+  "name": "Игрок в тёмной зоне",
+  "records": [
+    {
+      "step": 1,
+      "time": 0,
+      "caption": "Игрок в тёмном зале шумит, но остаётся невидимым",
+      "input": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "hall"
+        ],
+        [
+          "hears",
+          "g1",
+          "noise"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "since",
+          "g1",
+          0
+        ],
+        [
+          "since",
+          "g2",
+          0
+        ],
+        [
+          "state",
+          "g1",
+          "patrol"
+        ],
+        [
+          "state",
+          "g2",
+          "patrol"
+        ],
+        [
+          "time",
+          0
+        ]
+      ],
+      "fired": [
+        "dark_zone_g1",
+        "hear_noise_g1"
+      ],
+      "trace": [
+        {
+          "rule": "dark_zone_g1",
+          "priority": 100,
+          "added": [
+            [
+              "hidden",
+              "g1",
+              "player"
+            ]
+          ],
+          "removed": [],
+          "facts": [
+            [
+              "at",
+              "g1",
+              "hall"
+            ],
+            [
+              "at",
+              "g2",
+              "storage"
+            ],
+            [
+              "at",
+              "player",
+              "hall"
+            ],
+            [
+              "hears",
+              "g1",
+              "noise"
+            ],
+            [
+              "hidden",
+              "g1",
+              "player"
+            ],
+            [
+              "light_on",
+              "corridor"
+            ],
+            [
+              "light_on",
+              "storage"
+            ],
+            [
+              "since",
+              "g1",
+              0
+            ],
+            [
+              "since",
+              "g2",
+              0
+            ],
+            [
+              "state",
+              "g1",
+              "patrol"
+            ],
+            [
+              "state",
+              "g2",
+              "patrol"
+            ],
+            [
+              "time",
+              0
+            ]
+          ]
+        },
+        {
+          "rule": "hear_noise_g1",
+          "priority": 50,
+          "added": [
+            [
+              "state",
+              "g1",
+              "investigate"
+            ]
+          ],
+          "removed": [
+            [
+              "state",
+              "g1",
+              "patrol"
+            ]
+          ],
+          "facts": [
+            [
+              "at",
+              "g1",
+              "hall"
+            ],
+            [
+              "at",
+              "g2",
+              "storage"
+            ],
+            [
+              "at",
+              "player",
+              "hall"
+            ],
+            [
+              "hears",
+              "g1",
+              "noise"
+            ],
+            [
+              "hidden",
+              "g1",
+              "player"
+            ],
+            [
+              "light_on",
+              "corridor"
+            ],
+            [
+              "light_on",
+              "storage"
+            ],
+            [
+              "since",
+              "g1",
+              0
+            ],
+            [
+              "since",
+              "g2",
+              0
+            ],
+            [
+              "state",
+              "g1",
+              "investigate"
+            ],
+            [
+              "state",
+              "g2",
+              "patrol"
+            ],
+            [
+              "time",
+              0
+            ]
+          ]
+        }
+      ],
+      "facts": [
+        [
+          "at",
+          "g1",
+          "hall"
+        ],
+        [
+          "at",
+          "g2",
+          "storage"
+        ],
+        [
+          "at",
+          "player",
+          "hall"
+        ],
+        [
+          "hears",
+          "g1",
+          "noise"
+        ],
+        [
+          "hidden",
+          "g1",
+          "player"
+        ],
+        [
+          "light_on",
+          "corridor"
+        ],
+        [
+          "light_on",
+          "storage"
+        ],
+        [
+          "since",
+          "g1",
+          0
+        ],
+        [
+          "since",
+          "g2",
+          0
+        ],
+        [
+          "state",
+          "g1",
+          "investigate"
+        ],
+        [
+          "state",
+          "g2",
+          "patrol"
+        ],
+        [
+          "time",
+          0
+        ]
+      ],
+      "states": {
+        "g1": "investigate",
+        "g2": "patrol"
+      },
+      "expected": {
+        "g1": "investigate",
+        "g2": "patrol"
+      },
+      "ok": true
+    }
+  ]
+}

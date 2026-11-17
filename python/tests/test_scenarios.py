@@ -53,3 +53,18 @@ def test_duplicate_names_rejected():
     e.add(r)
     with pytest.raises(ValueError):
         e.add(r)
+
+
+def test_all_rule_schemas_are_demonstrated():
+    exercised = set()
+    for path in sorted((ROOT / "scenarios").glob("*.json")):
+        for record in play(json.loads(path.read_text(encoding="utf-8-sig"))):
+            exercised.update(name.removesuffix("_g1").removesuffix("_g2") for name in record["fired"])
+    expected = {r.name.removesuffix("_g1").removesuffix("_g2") for r in build().rules}
+    assert exercised == expected
+
+
+def test_scenario_traces_are_deterministic():
+    for path in sorted((ROOT / "scenarios").glob("*.json")):
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
+        assert play(data) == play(data)

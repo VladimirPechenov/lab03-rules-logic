@@ -1,0 +1,13 @@
+Игрок в тёмной зоне
+
+STEP 1 t=0s: Игрок в тёмном зале шумит, но остаётся невидимым
+INPUT: [('at', 'g1', 'hall'), ('at', 'g2', 'storage'), ('at', 'player', 'hall'), ('hears', 'g1', 'noise'), ('light_on', 'corridor'), ('light_on', 'storage'), ('since', 'g1', 0), ('since', 'g2', 0), ('state', 'g1', 'patrol'), ('state', 'g2', 'patrol'), ('time', 0)]
+FIRE dark_zone_g1 priority=100
+  + [('hidden', 'g1', 'player')]
+  - []
+  FACTS [('at', 'g1', 'hall'), ('at', 'g2', 'storage'), ('at', 'player', 'hall'), ('hears', 'g1', 'noise'), ('hidden', 'g1', 'player'), ('light_on', 'corridor'), ('light_on', 'storage'), ('since', 'g1', 0), ('since', 'g2', 0), ('state', 'g1', 'patrol'), ('state', 'g2', 'patrol'), ('time', 0)]
+FIRE hear_noise_g1 priority=50
+  + [('state', 'g1', 'investigate')]
+  - [('state', 'g1', 'patrol')]
+  FACTS [('at', 'g1', 'hall'), ('at', 'g2', 'storage'), ('at', 'player', 'hall'), ('hears', 'g1', 'noise'), ('hidden', 'g1', 'player'), ('light_on', 'corridor'), ('light_on', 'storage'), ('since', 'g1', 0), ('since', 'g2', 0), ('state', 'g1', 'investigate'), ('state', 'g2', 'patrol'), ('time', 0)]
+RESULT: {'g1': 'investigate', 'g2': 'patrol'} EXPECT: {'g1': 'investigate', 'g2': 'patrol'} OK

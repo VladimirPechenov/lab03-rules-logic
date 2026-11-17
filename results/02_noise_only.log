@@ -1,0 +1,9 @@
+Реакция на шум
+
+STEP 1 t=0s: Стражник G2 слышит шум на складе
+INPUT: [('at', 'g1', 'hall'), ('at', 'g2', 'storage'), ('at', 'player', 'corridor'), ('hears', 'g2', 'noise'), ('light_on', 'corridor'), ('light_on', 'hall'), ('light_on', 'storage'), ('since', 'g1', 0), ('since', 'g2', 0), ('state', 'g1', 'patrol'), ('state', 'g2', 'patrol'), ('time', 0)]
+FIRE hear_noise_g2 priority=50
+  + [('state', 'g2', 'investigate')]
+  - [('state', 'g2', 'patrol')]
+  FACTS [('at', 'g1', 'hall'), ('at', 'g2', 'storage'), ('at', 'player', 'corridor'), ('hears', 'g2', 'noise'), ('light_on', 'corridor'), ('light_on', 'hall'), ('light_on', 'storage'), ('since', 'g1', 0), ('since', 'g2', 0), ('state', 'g1', 'patrol'), ('state', 'g2', 'investigate'), ('time', 0)]
+RESULT: {'g1': 'patrol', 'g2': 'investigate'} EXPECT: {'g1': 'patrol', 'g2': 'investigate'} OK

@@ -1,0 +1,17 @@
+Проверка выключателя
+
+STEP 1 t=0s: В зале отключается свет; G1 проверяет выключатель
+INPUT: [('at', 'g1', 'hall'), ('at', 'g2', 'storage'), ('at', 'player', 'corridor'), ('light_on', 'corridor'), ('light_on', 'hall'), ('light_on', 'storage'), ('power_failed', 'hall'), ('since', 'g1', 0), ('since', 'g2', 0), ('state', 'g1', 'patrol'), ('state', 'g2', 'patrol'), ('time', 0)]
+FIRE light_off_g1 priority=45
+  + [('state', 'g1', 'investigate'), ('target', 'g1', 'switch')]
+  - [('state', 'g1', 'patrol')]
+  FACTS [('at', 'g1', 'hall'), ('at', 'g2', 'storage'), ('at', 'player', 'corridor'), ('light_on', 'corridor'), ('light_on', 'hall'), ('light_on', 'storage'), ('power_failed', 'hall'), ('since', 'g1', 0), ('since', 'g2', 0), ('state', 'g1', 'investigate'), ('state', 'g2', 'patrol'), ('target', 'g1', 'switch'), ('time', 0)]
+RESULT: {'g1': 'investigate', 'g2': 'patrol'} EXPECT: {'g1': 'investigate', 'g2': 'patrol'} OK
+
+STEP 2 t=5s: Свет восстановлен; за 5 секунд подозрений не найдено
+INPUT: [('at', 'g1', 'hall'), ('at', 'g2', 'storage'), ('at', 'player', 'corridor'), ('light_on', 'corridor'), ('light_on', 'hall'), ('light_on', 'storage'), ('since', 'g1', 0), ('since', 'g2', 0), ('state', 'g1', 'investigate'), ('state', 'g2', 'patrol'), ('target', 'g1', 'switch'), ('time', 5)]
+FIRE return_post_g1 priority=20
+  + [('since', 'g1', 5), ('state', 'g1', 'patrol')]
+  - [('since', 'g1', 0), ('state', 'g1', 'investigate'), ('target', 'g1', 'switch')]
+  FACTS [('at', 'g1', 'hall'), ('at', 'g2', 'storage'), ('at', 'player', 'corridor'), ('light_on', 'corridor'), ('light_on', 'hall'), ('light_on', 'storage'), ('since', 'g1', 5), ('since', 'g2', 0), ('state', 'g1', 'patrol'), ('state', 'g2', 'patrol'), ('time', 5)]
+RESULT: {'g1': 'patrol', 'g2': 'patrol'} EXPECT: {'g1': 'patrol', 'g2': 'patrol'} OK
