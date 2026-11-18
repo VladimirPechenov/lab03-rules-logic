@@ -1,7 +1,10 @@
+"""Проверка цепочки: обнаружение игрока, погоня, тревога и ответ второго стражника."""
+
 from rules.guard_rules import build
 
 
 def test_see_player_triggers_chase_and_alarm():
+    """Готовый факт зрения должен запустить согласованную реакцию обоих стражников."""
     e = build()
     e.assert_fact("sees", "g1", "player")
     fired = e.run()

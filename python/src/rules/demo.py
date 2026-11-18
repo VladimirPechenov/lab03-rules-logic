@@ -1,4 +1,4 @@
-"""Animated scene driven by actual inference snapshots, also used to export MP4."""
+"""Анимированная сцена по снимкам логического вывода с возможностью экспорта MP4."""
 
 import argparse
 import json
@@ -15,6 +15,7 @@ from .guard_rules import value
 from .scenarios import ROOT, play
 
 W, H, FPS = 1280, 720, 12
+# Длительность показа одного шага; не связана с модельным временем time/dt.
 SEGMENT = 9
 COLORS = {"patrol": "#67D9BC", "investigate": "#F2C66D", "chase": "#FF7389", "search": "#9FADFF"}
 LABELS = {"patrol": "Патруль", "investigate": "Проверка", "chase": "Погоня", "search": "Поиск"}
@@ -23,6 +24,7 @@ ZONE_LABELS = {"hall": "ЗАЛ", "corridor": "КОРИДОР", "storage": "СК�
 
 
 def font(size, bold=False):
+    """Найти шрифт с поддержкой кириллицы в Windows или Linux."""
     candidates = [
         Path(os.environ.get("WINDIR", "C:/Windows")) / "Fonts" / ("arialbd.ttf" if bold else "arial.ttf"),
         Path("/usr/share/fonts/truetype/dejavu") / ("DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"),
@@ -30,31 +32,35 @@ def font(size, bold=False):
     for path in candidates:
         if path.exists():
             return ImageFont.truetype(str(path), size)
-    raise RuntimeError("Install Arial or DejaVu Sans for Cyrillic captions")
+    raise RuntimeError("Установите Arial или DejaVu Sans для отображения русских подписей")
 
 
 FONTS = {s: font(s) for s in (14, 16, 18, 20, 22, 26, 32)}
 
 
 def text(draw, xy, content, size=18, fill="#EAF0FA"):
+    """Нарисовать текст на кадре."""
     draw.text(xy, str(content), font=FONTS[size], fill=fill)
 
 
 def wrap(draw, xy, content, width, size=18, fill="#EAF0FA", lines=10):
+    """Разбить длинную подпись на строки заданной ширины."""
     for i, line in enumerate(textwrap.wrap(str(content), width=width)[:lines]):
         text(draw, (xy[0], xy[1] + i * (size + 7)), line, size, fill)
 
 
 def facts_set(raw):
+    """Преобразовать списки из JSON-снимка обратно в множество фактов-кортежей."""
     return {tuple(f) for f in raw}
 
 
 def frame(data, records, seconds):
+    """Нарисовать кадр по сохранённой трассе: вход, срабатывания, затем результат."""
     idx = min(int(seconds // SEGMENT), len(records) - 1)
     rec = records[idx]
     local = seconds % SEGMENT
     n = len(rec["trace"])
-    # First two seconds show input. Then expose real rule activations one by one.
+    # Первые две секунды показываем вход, затем последовательно раскрываем срабатывания правил.
     shown = 0 if local < 2 else min(n, int((local - 2) / 4 * n) + 1)
     raw = rec["input"] if shown == 0 else rec["trace"][shown - 1]["facts"]
     facts = facts_set(raw)
@@ -65,7 +71,7 @@ def frame(data, records, seconds):
     d = ImageDraw.Draw(im)
     text(d, (38, 22), "ЛР 03  /  ЛОГИЧЕСКАЯ МОДЕЛЬ СТЕЛС-NPC", 16, "#72D7C6")
     text(d, (38, 55), data["name"], 26)
-    text(d, (38, 96), "Печенов В. В.  •  ИВТ-465  •  Python / forward chaining", 16, "#98A8BE")
+    text(d, (38, 96), "Печенов В. В.  •  ИВТ-465  •  Python / прямой вывод", 16, "#98A8BE")
     d.rounded_rectangle((28, 140, 762, 665), 18, fill="#141F30")
     d.rounded_rectangle((783, 140, 1252, 665), 18, fill="#141F30")
     text(d, (48, 156), f"СЦЕНА  •  шаг {idx + 1}/{len(records)}  •  t = {rec['time']} с", 18)
@@ -91,6 +97,7 @@ def frame(data, records, seconds):
         cx, cy = (box[0] + box[2]) / 2 - 25, 340
         state = value(facts, "state", guard, "patrol")
         color = COLORS[state]
+        # Движение значков только иллюстрирует состояние и не меняет факты движка.
         phase = seconds * 1.4 + j * 2
         if state == "chase" and zone == player_zone:
             cx += 30 + 8 * math.sin(phase)
@@ -124,7 +131,7 @@ def frame(data, records, seconds):
     text(
         d,
         (803, 630),
-        "ПРОВЕРКА: OK" if final and rec["ok"] else "Выполнение шага…",
+        "ПРОВЕРКА: УСПЕШНО" if final and rec["ok"] else "Выполнение шага…",
         16,
         "#67D9BC" if final and rec["ok"] else "#98A8BE",
     )
@@ -135,8 +142,9 @@ def frame(data, records, seconds):
 
 
 def export(path, data, records, output):
+    """Передать кадры в FFmpeg и сохранить видео одного сценария."""
     if not shutil.which("ffmpeg"):
-        raise RuntimeError("FFmpeg is required for video export")
+        raise RuntimeError("Для экспорта видео требуется FFmpeg")
     command = [
         "ffmpeg",
         "-y",
@@ -165,6 +173,7 @@ def export(path, data, records, output):
         "+faststart",
         str(output),
     ]
+    # FFmpeg получает несжатые RGB-кадры через стандартный ввод; звук не добавляется.
     proc = subprocess.Popen(command, stdin=subprocess.PIPE)
     try:
         for i in range(len(records) * SEGMENT * FPS):
@@ -172,18 +181,19 @@ def export(path, data, records, output):
     finally:
         proc.stdin.close()
     if proc.wait() != 0:
-        raise RuntimeError(f"FFmpeg failed for {path.name}")
+        raise RuntimeError(f"Ошибка FFmpeg при экспорте {path.name}")
 
 
 def main():
-    p = argparse.ArgumentParser()
-    p.add_argument("--render", action="store_true", help="Export each scenario and combined video")
-    p.add_argument("--scenario", help="Scenario filename stem")
-    p.add_argument("--output", type=Path, default=ROOT / "videos")
+    """Открыть окно демонстрации или экспортировать сценарии в MP4."""
+    p = argparse.ArgumentParser(description="Демонстрация логической модели стражников")
+    p.add_argument("--render", action="store_true", help="Экспортировать каждый сценарий и общее видео")
+    p.add_argument("--scenario", help="Имя файла сценария без расширения .json")
+    p.add_argument("--output", type=Path, default=ROOT / "videos", help="Папка для готовых видео")
     args = p.parse_args()
     paths = sorted((ROOT / "scenarios").glob(f"{args.scenario or '*'}.json"))
     if not paths:
-        p.error("No scenarios matched")
+        p.error("Подходящие сценарии не найдены")
     items = [(path, json.loads(path.read_text(encoding="utf-8-sig"))) for path in paths]
     if args.render:
         args.output.mkdir(parents=True, exist_ok=True)
@@ -191,7 +201,7 @@ def main():
         for path, data in items:
             records = play(data)
             if not all(r["ok"] for r in records):
-                raise RuntimeError(f"Scenario failed: {path.stem}")
+                raise RuntimeError(f"Проверка сценария не пройдена: {path.stem}")
             export(path, data, records, args.output / f"{path.stem}.mp4")
             image_dir = ROOT / "docs" / "img"
             image_dir.mkdir(parents=True, exist_ok=True)
@@ -200,7 +210,7 @@ def main():
                 {"id": path.stem, "name": data["name"], "start": elapsed, "duration": len(records) * SEGMENT}
             )
             elapsed += len(records) * SEGMENT
-            print(f"Rendered {path.stem}", flush=True)
+            print(f"Создано видео: {path.stem}", flush=True)
         playlist = args.output / "concat.txt"
         playlist.write_text("\n".join(f"file '{path.stem}.mp4'" for path, _ in items), encoding="utf-8")
         subprocess.run(
@@ -234,6 +244,7 @@ def main():
         label = tk.Label(window)
         label.pack()
         status = {"index": 0, "seconds": 0.0, "paused": False}
+        # Окно и экспорт используют тот же исполнитель сценариев, что и тесты.
         played = [play(data) for _, data in items]
 
         def move(delta):

@@ -1,7 +1,7 @@
 [project]
 name = "lab03-rules"
 version = "1.0.0"
-description = "Rule based stealth NPC laboratory"
+description = "Лабораторная работа: логическая модель стелс-NPC на основе правил"
 requires-python = ">=3.10"
 dependencies = ["Pillow>=10"]
 
